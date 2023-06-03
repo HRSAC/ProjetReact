@@ -9,10 +9,11 @@ function WelcomeFunc ({name, children}) {
 
 class Welcome extends React.Component {
 
-    constructor (props){
-        super(props)
-        console.log(props)
-    }
+    // constructor (props){
+        //toujours ajouter le !!super!!
+    //     super(props)
+    //     console.log(props)
+    // }
 
     render(){
         return <div>
@@ -24,4 +25,39 @@ class Welcome extends React.Component {
     }
 }
 
-ReactDOM.render(<Welcome name="jean">Bonjour tout le monde </Welcome> , document.querySelector('#app'))
+class Clock extends React.Component {
+
+    constructor (props) {
+        super(props)
+        this.state = {date: new Date()}
+        this.timer = null 
+    }
+
+    componentDidMount() {
+        this.timer = window.setInterval(this.tick.bind(this), 1000)
+    }
+
+    componentwillUnmount() {
+        window.clearInterval(this.timer)
+    }
+
+    tick () {
+        this.setState({date: new Date()})
+    }
+
+    render () {
+        return <div>
+            il est {this.state.date.toLocaleDateString()}  {this.state.date.toLocaleTimeString()}
+        </div>
+    }
+}
+
+function Home (){
+    return <div>
+        <Welcome name="jean"/>
+        <Welcome name="pierre"/>
+        <Clock/>
+    </div>
+}
+
+ReactDOM.render(<Home/> , document.querySelector('#app'))
